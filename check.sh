@@ -235,7 +235,9 @@ do {
 wget -S --spider -o $tmp/output.log $line
 
 #take the first link which starts with http and ends with zip
-url=$(sed "s/http/\nhttp/g" $tmp/output.log | sed "s/zip/zip\n/g" | grep "^http.*zip$" | head -1)
+url=$(sed "s/http/\nhttp/g" $tmp/output.log | \
+sed "s/zip/zip\n/g" | \
+grep "^http.*zip$" | head -1)
 
 #calculate exact filename of link
 filename=$(echo $url | sed "s/^.*\///g")
