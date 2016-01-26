@@ -6,7 +6,7 @@
 #sudo apt-get update -y && sudo apt-get upgrade -y
 #sudo apt-get install git -y
 #mkdir -p /home/pi/detect && cd /home/pi/detect
-#git clone https://github.com/catonrug/silverlight-detect.git && cd silverlight-detect && chmod +x check.sh && ./check.sh
+#git clone https://github.com/catonrug/detect-raspbian.git && cd detect-raspbian && chmod +x check.sh && ./check.sh
 
 #check if script is located in /home direcotry
 pwd | grep "^/home/" > /dev/null
@@ -235,7 +235,7 @@ do {
 wget -S --spider -o $tmp/output.log $line
 
 #take the first link which starts with http and ends with zip
-url=(sed "s/http/\nhttp/g" output.log | sed "s/zip/zip\n/g" | head -1)
+url=$(sed "s/http/\nhttp/g" output.log | sed "s/zip/zip\n/g" | head -1)
 
 #calculate exact filename of link
 filename=$(echo $url | sed "s/^.*\///g")
@@ -245,6 +245,7 @@ grep "$url" $db > /dev/null
 if [ $? -ne 0 ]
 then
 echo new version detected!
+echo $url
 echo "$url">> $db
 			
 #lets send emails to all people in "posting" file
